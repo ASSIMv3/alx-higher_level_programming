@@ -26,12 +26,13 @@ class Square:
 
     @position.setter
     def position(self, value):
-        if type(value) != tuple or len(value) != 2 or \
-            not all([type(i) == int for i in value]) or \
-            not all([i >= 0 for i in value]):
-                raise TypeError("position must contain positive integers")
-            self.__position = value
-    
+        if not isinstance(value, tuple) or len(value) != 2 or \
+                not all(isinstance(n, int) for n in value):
+            raise TypeError("position must be a tuple of 2 positive integers")
+        if any(n < 0 for n in value):
+            raise ValueError("position must contain positive integers")
+        self.__position = value
+
     def area(self):
         return self.__size ** 2
 
