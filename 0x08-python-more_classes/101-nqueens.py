@@ -2,28 +2,25 @@
 """Solves the N-queens puzzle"""
 
 
-import sys
+from sys import argv, exit
 
 
 def nqueens(n):
-    """A program that solves the N Queens problem"""
-
-    board = [[i, None] for i in range(n)]  # Create an empty board
+    board = [[i, None] for i in range(n)]
 
     def exists(x, y):
-        """Check if a queen already exists in the same column (y)"""
-        for i in range(x):
+        i = 0
+        while i < x:
             if board[i][1] == y:
                 return True
+            i += 1
         return False
 
     def clear(x):
-        """Clear the answers"""
         for i in range(x, n):
             board[i][1] = None
 
     def reject(x, y):
-        """Reject the solution"""
         if exists(x, y):
             return False
         for i in range(x):
@@ -32,7 +29,6 @@ def nqueens(n):
         return True
 
     def solve_nqueens(x):
-        """Recursive backtracking function"""
         for y in range(n):
             clear(x)
             if reject(x, y):
@@ -46,16 +42,13 @@ def nqueens(n):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(argv) != 2:
         print("Usage: nqueens N")
-        sys.exit(1)
-    try:
-        n = int(sys.argv[1])
-        if n < 4:
-            print("N must be at least 4")
-            sys.exit(1)
-        nqueens(n)
-    except ValueError:
+        exit(1)
+    elif not argv[1].isdigit():
         print("N must be a number")
-        sys.exit(1)
-
+        exit(1)
+    if int(argv[1]) < 4:
+        print("N must be at least 4")
+        exit(1)
+    nqueens(int(argv[1]))
