@@ -4,7 +4,6 @@
 
 class Rectangle:
     """Defines a rectangle class"""
-
     number_of_instances = 0
     print_symbol = "#"
 
@@ -40,21 +39,30 @@ class Rectangle:
             self.__height = value
 
     def area(self):
-        return self.__width * self.__height
+        """returns the rectangle area"""
+        return self.__height * self.__width
 
     def perimeter(self):
-        if self.__width == 0 or self.__height == 0:
+        """returns the rectangle perimeter"""
+        if self.__height == 0 or self.__width == 0:
             return 0
-        return 2 * (self.__width + self.__height)
+        return (self.__height + self.__width) * 2
 
     def __str__(self):
-        if self.__width == 0 or self.__height == 0:
+        if self.__height == 0 or self.__width == 0:
             return ""
-        return (str(self.print_symbol) * self.__width + "\n") * self.__height
+
+        shape = ""
+        for i in range(self.__height):
+            for _ in range(self.__width):
+                shape += str(self.print_symbol)
+            if i != self.__height - 1:
+                shape += "\n"
+        return shape
 
     def __repr__(self):
-        return "Rectangle({}, {})".format(self.__width, self.__height)
+        return f"Rectangle({self.__width}, {self.__height})"
 
     def __del__(self):
-        print("Bye rectangle...")
         Rectangle.number_of_instances -= 1
+        print("Bye rectangle...")
