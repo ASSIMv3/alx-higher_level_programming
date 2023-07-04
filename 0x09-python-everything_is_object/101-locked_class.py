@@ -4,4 +4,6 @@ except if the new instance attribute is called first_name"""
 
 
 class LockedClass:
+    """prevents the dynamic creation of new instance attributes,
+    except for the attribute 'first_name"""
     __slots__ = ["first_name"]
