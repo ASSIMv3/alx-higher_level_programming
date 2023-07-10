@@ -3,6 +3,7 @@
 
 
 class MyList(list):
+    """subclass of the class 'list'"""
     def print_sorted(self):
         """Sort the list in ascending order"""
         sorted_list = sorted(self)
