@@ -7,6 +7,7 @@ class MyInt(int):
     def __eq__(self, other):
         """Inverted equality operator"""
         return int(self) != other
+
     def __ne__(self, other):
         """Inverted inequality operator"""
         return int(self) == other
