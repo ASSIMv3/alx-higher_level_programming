@@ -3,6 +3,7 @@
 
 
 def print_statistics(file_size, status_codes):
+    """Print accumulated metrics"""
     print("File size: {}".format(file_size))
     for k in sorted(status_codes):
         print("{}: {}".format(k, status_codes[k]))
