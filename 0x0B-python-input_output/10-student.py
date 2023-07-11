@@ -10,8 +10,13 @@ class Student:
         self.age = age
 
     def to_json(self, attrs=None):
-        if attr is not None:
-            res = {k: self.__dict__[k] for k in self.__dict__.keys() & attr}
-            return res
-        else:
-            return self.__dict__
+        if attrs is None:
+            return vars(self)
+        result = {}
+        for attr in attrs:
+            if type(attr) is str:
+                try:
+                    result[attr] = vars(self)[attr]
+                except Exception:
+                    pass
+        return result
