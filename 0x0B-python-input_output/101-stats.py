@@ -1,39 +1,36 @@
 #!/usr/bin/python3
-"""reads stdin line by line and computes metrics"""
 import sys
 
+status_counts = {}
+total_file_size = 0
+line_count = 0
 
-def print_statistics(total_size, status_counts):
-    print("File size: {}".format(total_size))
-    for status, count in sorted(status_counts.items()):
-        print("{}: {}".format(status, count))
+try:
+    for line in sys.stdin:
+        # Extract the relevant information from the input line
+        parts = line.split()
+        status_code = parts[-2]
+        file_size = int(parts[-1])
 
+        # Update the total file size
+        total_file_size += file_size
 
-def parse_line(line):
-    parts = line.split()
-    status_code = parts[-2]
-    file_size = int(parts[-1])
-    return status_code, file_size
+        # Update the status code count
+        if status_code in status_counts:
+            status_counts[status_code] += 1
+        else:
+            status_counts[status_code] = 1
 
+        line_count += 1
 
-def main():
-    total_size = 0
-    status_counts = {}
+        # Print statistics after every 10 lines
+        if line_count % 10 == 0:
+            print("Total file size: {}".format(total_file_size))
+            for code in sorted(status_counts.keys()):
+                print("{}: {}".format(code, status_counts[code]))
 
-    try:
-        line_count = 0
-        for line in sys.stdin:
-            status_code, file_size = parse_line(line)
-            total_size += file_size
-            status_counts[status_code] = status_counts.get(status_code, 0) + 1
-
-            line_count += 1
-            if line_count % 10 == 0:
-                print_statistics(total_size, status_counts)
-
-    except KeyboardInterrupt:
-        print_statistics(total_size, status_counts)
-
-
-if __name__ == "__main__":
-    main()
+except KeyboardInterrupt:
+    # Print the final statistics on keyboard interruption
+    print("Total file size: {}".format(total_file_size))
+    for code in sorted(status_counts.keys()):
+        print("{}: {}".format(code, status_counts[code]))
