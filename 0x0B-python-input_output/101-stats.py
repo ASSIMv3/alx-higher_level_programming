@@ -1,12 +1,5 @@
 #!/usr/bin/python3
 """reads stdin line by line and computes metrics"""
-import sys
-
-
-size = 0
-status_codes = {}
-valid_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
-count = 0
 
 
 def print_statistics(file_size, status_codes):
@@ -17,6 +10,13 @@ def print_statistics(file_size, status_codes):
 
 
 if __name__ == "__main__":
+    from sys import stdin
+
+    file_size = 0
+    status_codes = {}
+    valid_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
+    num_lines = 0
+
     try:
         for line in sys.stdin:
             if num_lines == 10:
