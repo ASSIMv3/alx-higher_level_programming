@@ -18,7 +18,7 @@ if __name__ == "__main__":
     num_lines = 0
 
     try:
-        for line in sys.stdin:
+        for line in stdin:
             if num_lines == 10:
                 print_statistics(file_size, status_codes)
                 num_lines = 1
