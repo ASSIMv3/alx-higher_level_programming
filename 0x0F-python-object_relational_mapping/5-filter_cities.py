@@ -2,19 +2,22 @@
 """takes in the name of a state as an argument and
 lists all cities of that state, using the database"""
 
-import MySQLdb as db
+import MySQLdb
 from sys import argv
 
 if __name__ == "__main__":
-    db_connect = db.connect(host="localhost", port=3306, user=argv[1],
-                            passwd=argv[2], db=argv[3])
-    db_connect.cursor() = db_cursor:
-        db_cursor.execute("SELECT cities.name \
-                    FROM cities \
-                    INNER JOIN states ON \
-                    states.id=cities.state_id \
-                    AND states.name=%s; \
-                    ", {'state_name': argv[4]})
-    rows = db_cursor.fetchall()
-    if rows is not None:
-        print(", ".join([row[1] for row in rows]))
+    db = MySQLdb.connect(host="localhost", user=argv[1],
+                         passwd=argv[2], db=argv[3], port=3306)
+    cur = db.cursor()
+    state_name = argv[4]
+    cur.execute("SELECT cities.name \
+                FROM cities JOIN states ON cities.state_id = states.id \
+                WHERE states.name = %s;", (state_name, ))
+    cities = cur.fetchall()
+    cities_list = []
+    for city in cities:
+        cities_list.append(city[0])
+    print(', '.join(cities_list))
+
+    cur.close()
+    db.close()
