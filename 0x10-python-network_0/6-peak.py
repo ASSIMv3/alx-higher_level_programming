@@ -3,6 +3,7 @@
 
 
 def find_peak(list_of_integers):
+    """peak of list_of_integers"""
     if not ints or type(ints) is not list:
         return None
 
